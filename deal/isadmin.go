@@ -2,6 +2,8 @@ package deal
 
 import (
 	"fmt"
+	"os/user"
+	"strings"
 	"syscall"
 	"unsafe"
 )
@@ -52,4 +54,15 @@ func Isadmin(path string) {
 		fmt.Println("we get you")
 		fmt.Println(r1)
 	}
+}
+
+func GetUserName() string {
+	compterUser,_ :=  user.Current()
+	index := strings.Index(compterUser.Username, "\\")
+	if index == -1{
+		return compterUser.Username
+	}
+	temp := compterUser.Username[index+1:]
+	return temp
+
 }

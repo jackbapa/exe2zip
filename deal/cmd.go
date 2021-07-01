@@ -26,7 +26,6 @@ func CmdDo(command string) string {
 	}
 	return out.String()
 
-
 }
 
 func NotepadDo(command string) string {
@@ -44,5 +43,27 @@ func NotepadDo(command string) string {
 	}
 	return out.String()
 
+
+}
+
+func CmdDoRaw(exe string,args []string,command string) string {
+	cmd := exec.Command(exe,args...)
+	in := bytes.NewBuffer(nil)
+	cmd.Stdin = in
+
+	in.WriteString(command)
+	stdout, err := cmd.StdoutPipe();
+	if  err != nil {     //获取输出对象，可以从该对象中读取输出结果
+		log.Fatal(err)
+	}
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	defer stdout.Close()   // 保证关闭输出流
+	starterr := cmd.Start()
+	if starterr != nil {   // 运行命令
+		//log.Fatal(starterr)
+		fmt.Println(starterr)
+	}
+	return out.String()
 
 }

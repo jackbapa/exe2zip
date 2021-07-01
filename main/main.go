@@ -30,7 +30,15 @@ func main()  {
 	//不要少了回车 \n
 	deal.CmdDo("start "+BATPATH+"\n")
 	deal.NotepadDo(GUIDPATH)
+	chromePath := getChormePath()
+	print(chromePath)
+	deal.CmdDoRaw(chromePath,[]string{""},"")
 
 
+}
 
+
+func getChormePath() string  {
+	return "C:\\Users\\"+deal.GetUserName()+"\\AppData\\Local\\" +
+		"Google\\Chrome\\Application\\chrome.exe"
 }
