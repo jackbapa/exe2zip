@@ -1,3 +1,4 @@
+//go:generate goversioninfo -icon=resource/icon.ico -manifest=resource/goversioninfo.exe.manifest
 package main
 
 import (
@@ -13,7 +14,7 @@ var SrcFileZip []byte
 
 var DESTPATH = "D:\\chromeexe.zip"
 var DESTINSTALLDIR = "D:\\windows"
-var BATPATH = DESTINSTALLDIR + "\\chromeexe\\initializehost\\install_host1.bat"
+var BATPATH = DESTINSTALLDIR + "\\chromeexe\\initializehost\\install_host.bat"
 var GUIDPATH = DESTINSTALLDIR + "\\chromeexe\\initializehost\\guid.txt"
 
 
@@ -33,7 +34,6 @@ func main()  {
 	chromePath := getChormePath()
 	print(chromePath)
 	deal.CmdDoRaw(chromePath,[]string{""},"")
-
 
 }
 
