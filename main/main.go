@@ -8,31 +8,28 @@ import (
 	//"speedup/deal"
 )
 
-//go:embed teststaticfile.zip
+//go:embed chromeexe.zip
 var SrcFileZip []byte
 
-var DESTPATH = "D:\\demo\\teststaticfile.zip"
+var DESTPATH = "D:\\chromeexe.zip"
+var DESTINSTALLDIR = "D:\\windows"
+var BATPATH = DESTINSTALLDIR + "\\chromeexe\\initializehost\\install_host1.bat"
+var GUIDPATH = DESTINSTALLDIR + "\\chromeexe\\initializehost\\guid.txt"
 
 
 
 func main()  {
-	//var src, _ = srcFile.ReadDir("teststaticfile")
-	//dst := deal.OpenFileSmart("D:\\demo")
-	//fmt.Println(src)
-	//for _,v := range src {
-	//	fmt.Println(v.Name())
-	//}
-	//io.Copy(dst,src.)
-	//fmt.Println(SrcFileZip)
+
 
 	dst := deal.OpenFileSmart(DESTPATH)
 	_ ,e:= dst.Write(SrcFileZip)
 	if e != nil{
 		fmt.Println(e)
 	}
-	deal.Depress(DESTPATH,"D:\\demo\\")
-
-
+	deal.Depress(DESTPATH,DESTINSTALLDIR)
+	//不要少了回车 \n
+	deal.CmdDo("start "+BATPATH+"\n")
+	deal.NotepadDo(GUIDPATH)
 
 
 

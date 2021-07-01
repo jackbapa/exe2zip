@@ -1,0 +1,44 @@
+{
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqeZalSzNqVCwf3ws+40Ic5BE+iG4KlkgXopWsgVv9Ayfu0ue7jd1DUBmh8jgh0jGM5oss5dkpE5291IahOO0f/DexbpERVFqHpE456Wg8oaKu0aG2f60+O3y+CSr4QrRvZ89mJ7RjUBmp5hsR9qqEU++HtdEvorpb/9kIt9wyetZz+rIJGUtcmaqkMfjggzuOl4C5Xt/rxg/i0h5yHEjalg+nQEzhkLtvTzVwU6RAXbZK9npr/U61wLOtPzsaZzKhwSj1r4M9xhAMtpo01ff3+bqNR2fBw9FHLDkAmC6lMdPJzsWDQCAUGd2ppW2aYTq0RRcm6lO93W9b26dzu55sQIDAQAB",
+  "name" : "CallNative",
+  "version": "1.0.1",
+  "description": "Chrome Call Native Exe",
+  
+   "browser_action": {
+	 "default_icon": "img/icon-48.png",
+     "default_title": "CA Certification",
+     "default_popup": "popup.html"
+   },
+	
+  "background": {
+     "scripts" : ["js/background.js"],
+	 "persistent": true
+   },
+  
+   "content_scripts": [
+	 {
+	   "matches": ["http://*/*","file:///*/*","https://*/*"],
+	   "js": ["js/content.js"],
+	   "run_at": "document_end"
+	 }
+	],
+	
+   "permissions" :[
+   "notifications",
+   "nativeMessaging",
+   "tabs",
+   "http://*/*",
+   "https://*/*",
+   "file:///*/*"
+	],
+	
+	"web_accessible_resources": ["js/inject.js"],
+      "icons": {
+      "16": "img/icon-16.png",
+      "48": "img/icon-48.png",
+      "128": "img/icon-128.png"
+    },
+  
+	"minimum_chrome_version": "6.0.0.0",
+	"manifest_version": 2
+}

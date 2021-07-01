@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+# Copyright (c) 2012 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+
+import struct
+import sys
+import threading
+import Queue
+from win32com.client import *
+import time
+import string
+import random
+import json
+import httplib
+import urllib
+
+# On Windows, the default I/O mode is O_TEXT. Set this to O_BINARY
+# to avoid unwanted modifications of the input/output streams.
+if sys.platform == "win32":
+  import os, msvcrt
+  msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
+  msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
+
+# Helper function that sends a message to the webapp.
+def send_message(message):
+  message = json.dumps(message)
+  # Write message size.
+  sys.stdout.write(struct.pack('I', len(message)))
+  # Write the message itself.
+  sys.stdout.write(message)
+  #sys.stdout.write(message)  
+  sys.stdout.flush()
+
+# Thread that reads messages from the webapp.
+def read_thread_func(queue):
+  while 1:
+    # Read the message length (first 4 bytes).
+    text_length_bytes = sys.stdin.read(4)
+    # Unpack message length as 4 byte integer.
+    text_length = struct.unpack('i', text_length_bytes)[0]
+
+    text = sys.stdin.read(text_length)
+    textJson = json.loads(text)
+    api = textJson["api"]
+    randomStr = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(12))
+    usbOcx = Dispatch("USBKEY.usbkeyCtrl.1")
+    a = usbOcx.VgetnameFirst("", "1")
+    send_message('{"result": %s}' % api)
+
+def Main():
+  read_thread_func(None)
+  sys.exit(0)
+
+
+if __name__ == '__main__':
+  Main()

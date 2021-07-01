@@ -1,0 +1,9 @@
+{
+  "name": "com.exe.name",
+  "description": "Chrome Native Messaging Host",
+  "path": "C:\\Windows\\chromeexe\\nativehost\\nativehost.exe",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://ghapaiipnkgfhkbhnhiddmeghdnakdme/"
+  ]
+}

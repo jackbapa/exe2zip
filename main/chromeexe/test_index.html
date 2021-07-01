@@ -1,0 +1,17 @@
+<html>
+<head>
+<script>
+  function startApp(){
+    var evt=document.createEvent("CustomEvent");
+    evt.initCustomEvent('NativeCallEvent',true,false,{"type":"nativeMessage","api":"http://10.122.68.157:8088/api/ca/login","domain":"localhost","data":"C:\\Windows\\chromeexe\\nativehost\\nativehost.exe"});
+	document.dispatchEvent(evt);
+  }
+</script>
+</head>
+
+<body>
+  <button type="button" onClick="startApp()" id="startApp">call native app</button>
+  <input type="hidden" name="__CA__" id="__CA__" base="http://10.122.68.157:8088/api/ca/login">
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    .title {
+      display: inline-block;
+      width: 80px;
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+      color: #337eff;
+    }
+    .toggle {
+      position : relative;
+      display : inline-block;
+      width : 44px;
+      height : 22px;
+      line-height: 22px;
+      background-color: #dee4ed;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    .toggle:after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #fff;
+      top: 1px;
+      left: 1px;
+      transition: all 0.5s;
+    }
+    .checkbox:checked + .toggle::after {
+      left: 22px;
+    }
+    .checkbox:checked + .toggle {
+      background-color: #337eff;
+    }
+    .checkbox {
+      display : none;
+    }
+
+    .line {
+      margin-bottom: 8px;
+    }
+    .label {
+      font-size: 12px;
+      display: inline-block;
+      color: #bbb;
+      width: 80px;
+      text-align: right;
+    }
+    .btn {
+      margin-left: 80px;
+      border: none;
+      background-color: #337eff;
+      color: #fff;
+      cursor: pointer;
+    }
+    </style>
+  </head>
+  <body style="width: 268px; overflow: hidden;">
+    <div class="line">
+      <label class="title">Mock</label>
+      <input type="checkbox" id="switch" class="checkbox"/>
+      <label for="switch" class="toggle"></label>
+    </div>
+    <div id="user">
+      <div class="line">
+        <label class="label" for="UserName">
+          UserName:
+        </label>
+        <input id="UserName"></input>
+      </div>
+      <div class="line">
+        <label class="label" for="UserId">
+          UserId:
+        </label>
+        <input id="UserId"></input>
+      </div>
+      <div class="line">
+        <label class="label" for="Authorization">
+          Authorization:
+        </label>
+        <textarea id="Authorization" name="Authorization" rows="5"></textarea>
+      </div>
+      <div class="line">
+        <label class="label" for="Token">
+          QZ Token:
+        </label>
+        <textarea id="Token" name="Token" rows="5"></textarea>
+      </div>
+      <button id="set" class="btn">SET</button>
+    </div>
+    <div id="test">
+      <div class="line">
+        <span class="label">
+          Domain:
+        </span>
+        <input id="caDomain"></input>
+      </div>
+      <div class="line">
+        <span class="label">
+          API:
+        </span>
+        <input id="caApi" value="/ca/login"></input>
+      </div>
+      <button id="caTest" class="btn">TEST</button>
+      <div id="caResponse"></div>
+    </div>
+    <script src="js/popup.js"></script>
+  </body>
+</html>

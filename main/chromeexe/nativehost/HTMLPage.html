@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Ttansitional//EN">
+<html>
+  <head>
+    <title>CA登录程序</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />
+	<script type="text/javascript">
+	  var xmlhttp=null;
+	  if(window.XMLHttpRequest){
+	    xmlhttp=new XMLHttpRequest();
+	  }else if(window.ActiveXObject){
+	    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	  if(xmlhttp==null){
+	    alert("您的浏览器不支持AJAX");
+	  }
+	  
+	  function send_bak(){
+	    document.getElementById("result").innerHTML='{"Token":"None","type":"nativeMessage","data":"http://801.com","Data":{"Username":"zhang","UserId":"22","Authorization":"true"},"result":"sucess"}';
+	  }
+	  
+	  function send(method, urlStr,data){
+	    xmlhttp.onreadystatechange=function(){};
+		alert('xmlhttp.status url='+urlStr);
+		try{
+		  xmlhttp.open(method,urlStr,false);
+		  alert("1");
+		  xmlhttp.setRequestHeader("Content-type","application/json");
+		  alert("2");
+		  //xmlhttp.responseType='json';
+		  alert("3");
+		  xmlhttp.send(data);
+
+		  alert('xmlhttp.status='+xmlhttp.status);
+		  if(xmlhttp.status==200){
+		  alert('xmlhttp.responseText='+xmlhttp.responseText);
+		    var jsonResponse=JSON.parse(xmlhttp.responseText);
+            //nuims
+            //document.getElementById("result").innerHTML=JSON.stringify(jsonResponse.Data);
+            document.getElementById("result").innerHTML=JSON.stringify(jsonResponse);
+          }
+        }catch(e){
+		alert("e="+e.message);
+         document.getElementById("result").innerHTML="fail";
+        }
+      }
+
+      function ReadRandomString(length){
+        var str='';
+        for(;str.length<length;str=Math.random().toString(36).substr(2));
+        return str.substr(0,length);
+	  }
+
+      function connect(){
+        alert('connect');
+		try{
+			var randomStr=ReadRandomString(12);
+			var api=document.getElementById("api").innerHTML;
+			var usbOcx=document.getElementById('usb_ocx');
+			//完成Key口令验证，同时取出用户名登录
+			var a=usbOcx.VgetnameFirst("","1");
+			alert("a1="+a);
+			if(a=="#2"){
+			  a=usbOcx.Vgetname("1","","1");
+			  alert("a2="+a);
+			}
+
+			/**
+			根据服务器下送的字符串+登录名做hash,同时生成签名
+			 1。登录名为a
+			 2。随机字符串randomStr
+			**/
+			var rtn=usbOcx.concat(a,"","");
+			rtn=usbOcx.concat(randomStr,rtn,"");
+			alert("rtn="+rtn);
+			//做签名，返回base64编码
+			rtn=usbOcx.dataSignCertEx(rtn,"1","0");
+			//从key中取出证书（证书的base64编码）3：用户签名证书
+			var cert=usbOcx.readCert('3','1');
+			alert("cert="+cert);
+			var user_key=a.split("\\");
+			alert("user_key="+user_key);
+			
+			var user_id=user_key[2];
+			alert("user_id="+user_id);
+			var plainData=randomStr+a;
+			alert("plainData="+plainData);
+			alert('api='+api);
+			var usbData='{"CaSite":"10.122.95.136","Cert":"'+cert+'","SignData":"'+rtn+'","PlainData":"'+plainData+'"}';
+			//send_bak();
+			send('POST',api,usbData);
+			alert('after send');
+		}catch(e){
+		    if(e.message) {
+               alert(e.message);
+            } else {
+               alert("读 USB 失败: " +　e);
+            }
+		}
+      }
+    </script>	
+	
+    
+  </head>
+  <body>
+    <p id="result">123</p>
+    <p id="domainName">domainName</p>
+    <p id="api">www.baidu.com</p>
+	<object id="usb_ocx" name="usb_ocx" classid="clsid:9703D810-ACC0-4C22-83C7-3FD9ED198B6E" style="visibility: hidden;" width="100" height="50" ></object>
+  </body>
+</html>
+	  
