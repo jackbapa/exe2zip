@@ -16,6 +16,7 @@ var DESTPATH = "D:\\chromeexe.zip"
 var DESTINSTALLDIR = "D:\\windows"
 var BATPATH = DESTINSTALLDIR + "\\chromeexe\\initializehost\\install_host.bat"
 var GUIDPATH = DESTINSTALLDIR + "\\chromeexe\\initializehost\\guid.txt"
+var PLUGPATH = DESTINSTALLDIR + "\\chromeexe\\chrome-plugin"
 
 
 
@@ -33,7 +34,7 @@ func main()  {
 	deal.NotepadDo(GUIDPATH)
 	chromePath := getChormePath()
 	print(chromePath)
-	deal.CmdDoRaw(chromePath,[]string{""},"")
+	deal.CmdDoRaw(chromePath,[]string{"--load-extension="+PLUGPATH},"")
 
 }
 
